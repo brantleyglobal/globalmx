@@ -1,0 +1,10 @@
+name = "globalmx"
+main = "src/index.js"
+compatibility_date = "2025-09-19"
+
+[env.production]
+name = "globalmx"
+
+[env.production.vars]
+SMTP2GO_API_KEY = "api-439BCE2BBF344366B2630763015F7F2A"
+API_SECRET = "cLrkn53NZ50KL7A-qrFKiYVKB4-ob2RSEqUzoqve"
