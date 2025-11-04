@@ -210,6 +210,82 @@ async function sendEmail(params, env) {
     `;
     emailPayload.text_body = `Thank you for investing ${parseFloat(params.amount).toFixed(2)} ${escapeHtml(params.tokenSymbol)}. Investment unlocks on ${params.unlockLabel || "the specified date"}.`;
 
+  }  else if (params.templateType === "acquisition") {
+    // Investment confirmation email template
+    emailPayload.subject = `Global Dollar Purchase Confirmation for ${escapeHtml(params.from_firstname)} ${escapeHtml(params.from_lastname || "")} from BG Company!`;
+    emailPayload.html_body = `
+      <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f5f7fa; padding:20px;">
+        <tr>
+          <td align="center">
+            <table cellpadding="0" cellspacing="0" style="width:100%; max-width:600px; background-color:#ffffff; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); font-family:'Segoe UI', Arial, sans-serif; color:#333;">
+              
+              <!-- Header Banner -->
+              <tr>
+                <td style="background-color:#969696; padding:20px 30px;">
+                  <table width="100%">
+                    <tr>
+                      <td width="60" style="padding-right:15px;">
+                        <img src="https://brantley-global.com/logo.png" alt="Brantley Global" style="max-width:60px; height:auto;" />
+                      </td>
+                      <td style="font-size:14px; color:#000000; font-weight:300;">
+                        A Purchase Into The Ecosystem Of The Future.
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Title Section -->
+              <tr>
+                <td style="background-color:#f9fbfc; padding:20px;">
+                  <h2 style="color:#000000; font-size:14px; margin:0; font-weight:lighter">PURCHASE CONFIRMATION</h2>
+                </td>
+              </tr>
+
+              <!-- Greeting and Summary -->
+              <tr>
+                <td style="padding:5px 30px;">
+                  <p style="font-size:10px;">Hello ${escapeHtml(params.firstname || "")} ${escapeHtml(params.lastname || "")},</p>
+                  <p style="font-size:10px;">Payment Amount <strong>${parseFloat(params.totalTokenAmountIn).toFixed(2)} ${escapeHtml(params.tokenSymbol)}</strong>.</p>
+                  <p style="font-size:10px;">Global Dollar Received <strong>${parseFloat(params.totalTokenAmountOut).toFixed(2)} GBDo</strong>.</p>
+                </td>
+              </tr>
+
+              <!-- Transaction Details -->
+              <tr>
+                <td style="background-color:#f9fbfc; padding:20px 30px;">
+                  <h3 style="color:#000000; font-weight:lighter; margin-bottom:10px;">TRANSACTION DETAILS</h3>
+                  <table width="100%" style="font-size:15px; line-height:1.6;">
+                    <tr><td><strong>User Wallet Address:</strong></td><td>${escapeHtml(params.userAddress)}</td></tr>
+                    <tr><td><strong>User Receipt:</strong></td><td>${escapeHtml(params.receipt)}</td></tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Closing Message -->
+              <tr>
+                <td style="padding:20px 30px;">
+                  <p style="font-size:15px;">Your support is appreciated. If you have any questions, feel free to reply to this email.</p>
+                  <p style="font-size:15px;">Regards,<br/><strong>Brantley Global</strong></p>
+                  <p style="font-size:8px;">There for you in ways you can not believe. Even when you believe otherwise.</p>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color:#969696; padding:25px; text-align:center; font-size:13px; color:#000000;">
+                  &copy; ${new Date().getFullYear()} Brantley Global<br />
+                  <a href="https://brantley-global.com" style="color:#1E331E; text-decoration:none;">Visit Brantley Global</a>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    `;
+    emailPayload.text_body = `Your purchase is appreciated.`;
+
   } else if (params.templateType === "redemption") {
     // Redemption confirmation email template
     emailPayload.subject = `Redemption Confirmation from BG Company!`;
